@@ -1,7 +1,7 @@
 # log_to_database_test
 
 
-##sql part:
+## sql part:
 
 CREATE DATABASE LOGTEST;
 

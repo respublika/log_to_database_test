@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <JDBC name="DBAppender" tableName="logs">
+            <!--This assumes we are running in a container that provides the datasource under the given name-->
+            <!--<DataSource jndiName="java:/comp/env/jdbc/LoggingDataSource" />-->
+            <!--And this assumes we have a locally running database with the given connection details-->
+            <DriverManager connectionString="jdbc:mysql://localhost:3306/logtest" userName="user" password="pw"
+                driverClassName="com.mysql.jdbc.Driver"/>
+            <Column name="dated" isEventTimestamp="true" />
+            <Column name="logger" pattern="%logger" />
+            <Column name="level" pattern="%level" />
+            <Column name="message" pattern="%message" />
+        </JDBC>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="DBAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>

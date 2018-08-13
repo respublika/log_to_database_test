@@ -13,6 +13,5 @@ public class MainController {
     public String main() {
         log.info("valami");
         return "hello world";
-
     }
 }

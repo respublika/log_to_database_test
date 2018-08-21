@@ -5,15 +5,16 @@
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
         <JDBC name="DBAppender" tableName="logs">
-            <!--This assumes we are running in a container that provides the datasource under the given name-->
+            <!--This assumes we are running in a container that provides the datasource under the given name THIS IS THE PREFERRED WAY-->
             <!--<DataSource jndiName="java:/comp/env/jdbc/LoggingDataSource" />-->
-            <!--And this assumes we have a locally running database with the given connection details-->
-            <DriverManager connectionString="jdbc:mysql://localhost:3306/logtest" userName="user" password="pw"
-                driverClassName="com.mysql.jdbc.Driver"/>
+            <!--And this one uses a hand made connection factory-->
+            <ConnectionFactory class="com.greenfoxacademy.playlogs.ConnectionFactory" method="getConnection" />
             <Column name="dated" isEventTimestamp="true" />
             <Column name="logger" pattern="%logger" />
             <Column name="level" pattern="%level" />
             <Column name="message" pattern="%message" />
+            <!-- user Id SHOULD be coming from Thread Context instead of hardcoding it -->
+            <Column name="user_id" pattern="USER" />
         </JDBC>
     </Appenders>
     <Loggers>
